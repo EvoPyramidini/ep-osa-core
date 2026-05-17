@@ -1,41 +1,29 @@
-# EP-OSA Core Architecture
+# EP-OSA Topology-First Architecture
 
-## Architectural stance
-EP-OSA-Core is a **lightweight orchestration nucleus**. It must not evolve into a heavyweight backend monolith.
+## Principle
+EP-OSA core must remain **lightweight coordination intelligence**, not a monolithic AI runtime.
 
-## Core responsibilities
-EP-OSA-Core owns only coordination-centric concerns:
-- orchestration;
-- routing;
-- contracts;
-- topology semantics;
-- event coordination;
-- agent protocols;
-- supervision abstractions;
-- environment coordination.
+## System split
 
-## Coordination HQ model
-The HQ layer is a **coordination consciousness layer**, not a centralized server platform.
+### 1) Core (coordination nucleus)
+- routing
+- fields
+- signals
+- topology
+- contracts
 
-## Separation of concerns
-### In-scope for EP-OSA-Core
-- topology-driven orchestration;
-- semantic routing across environments;
-- protocol-level coordination between agents and capabilities.
+### 2) Memory ecosystem (external cognition)
+- operational memory
+- retrieval (RAG)
+- semantic graph structures
+- archaeology and dormant knowledge layers
 
-### Out-of-scope for EP-OSA-Core
-Memory-heavy and data-plane cognition systems are externalized to Pyramid/SKneogen layers, including:
-- RAG infrastructure;
-- vector storage;
-- operational experience graphs;
-- topology persistence;
-- contextual reconstruction pipelines.
+### 3) Capability ecosystem (execution)
+- tools and scripts
+- providers and services
+- automation chains
 
 ## Guardrails
 - Keep runtime minimal and orchestration-first.
-- Do not embed memory internals into runtime core.
-- Do not collapse memory + capability + orchestration into a giant agent.
-- Keep heavy computation and infrastructure external.
-
-## Final ecosystem model
-Pyramid -> Topology Engine -> Memory Layer <-> Capability Layer -> External Infrastructure.
+- Avoid coupling memory internals directly into core runtime.
+- Avoid giant-agent composition that collapses boundaries.
