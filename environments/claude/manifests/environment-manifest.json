@@ -1,0 +1,9 @@
+{
+  "environment": "claude",
+  "runtime_profile": "chat-runtime",
+  "capabilities": ["text_generation", "analysis", "code_assistance"],
+  "allowed_actions": ["read_repo", "propose_patch", "update_docs"],
+  "memory_map": "environments/claude/manifests/memory-map.json",
+  "risk_level": "medium",
+  "execution_scope": "governed-repo-operations"
+}

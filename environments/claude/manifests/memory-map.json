@@ -1,0 +1,7 @@
+{
+  "environment": "claude",
+  "providers": [
+    { "type": "github", "role": "canonical_state", "path": "/" },
+    { "type": "localfs", "role": "execution_artifacts", "path": "/workspace/" }
+  ]
+}

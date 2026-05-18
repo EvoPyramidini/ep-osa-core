@@ -1,0 +1,48 @@
+{
+  "version": "v1alpha1",
+  "nodes": [
+    {
+      "id": "chatgpt",
+      "role": "orchestrator",
+      "specialization": "orchestration/synthesis/runtime reasoning",
+      "manifests": {
+        "environment_manifest": "environments/chatgpt/manifests/environment-manifest.json",
+        "memory_map": "environments/chatgpt/manifests/memory-map.json"
+      },
+      "priority": 10,
+      "enabled": true
+    },
+    {
+      "id": "claude",
+      "role": "governor",
+      "specialization": "governance/documentation/analysis",
+      "manifests": {
+        "environment_manifest": "environments/claude/manifests/environment-manifest.json",
+        "memory_map": "environments/claude/manifests/memory-map.json"
+      },
+      "priority": 20,
+      "enabled": true
+    },
+    {
+      "id": "gemini",
+      "role": "researcher",
+      "specialization": "research/google ecosystem coordination",
+      "manifests": {
+        "environment_manifest": "environments/gemini/manifests/environment-manifest.json",
+        "memory_map": "environments/gemini/manifests/memory-map.json"
+      },
+      "priority": 30,
+      "enabled": true
+    }
+  ],
+  "invariants": [
+    "governance_precedes_execution",
+    "validated_intent_required",
+    "externalized_memory",
+    "traceable_decisions"
+  ],
+  "sync_rules": [
+    "schema_and_contract_changes_require_governance_review",
+    "environment_manifests_must_remain_schema_valid"
+  ]
+}

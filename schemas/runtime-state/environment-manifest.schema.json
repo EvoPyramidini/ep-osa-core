@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ep-osa-core/schemas/runtime-state/environment-manifest.schema.json",
+  "title": "Environment Manifest",
+  "type": "object",
+  "required": ["environment", "runtime_profile", "capabilities", "allowed_actions", "memory_map"],
+  "properties": {
+    "environment": { "type": "string" },
+    "runtime_profile": { "type": "string" },
+    "capabilities": { "type": "array", "items": { "type": "string" } },
+    "allowed_actions": { "type": "array", "items": { "type": "string" } },
+    "memory_map": { "type": "string" },
+    "risk_level": { "type": "string", "enum": ["low", "medium", "high", "critical"] },
+    "execution_scope": { "type": "string" }
+  },
+  "additionalProperties": false
+}
