@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ep-osa-core/schemas/providers/memory-map.schema.json",
+  "title": "Memory Provider Map",
+  "type": "object",
+  "required": ["environment", "providers"],
+  "properties": {
+    "environment": { "type": "string" },
+    "providers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "role", "path"],
+        "properties": {
+          "type": { "type": "string", "enum": ["github", "gdrive", "onedrive", "localfs", "vector_db", "notion", "custom"] },
+          "role": { "type": "string" },
+          "path": { "type": "string" },
+          "read_only": { "type": "boolean", "default": false }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
