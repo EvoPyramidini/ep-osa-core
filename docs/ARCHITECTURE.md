@@ -21,6 +21,8 @@ The HQ layer is a **coordination consciousness layer**, not a centralized server
 ### In-scope for EP-OSA-Core
 - topology-driven orchestration;
 - semantic routing across environments;
+- protocol-level coordination between agents and capabilities;
+- runtime reconstruction from machine-readable state.
 - protocol-level coordination between agents and capabilities.
 
 ### Out-of-scope for EP-OSA-Core
@@ -34,6 +36,12 @@ Memory-heavy and data-plane cognition systems are externalized to Pyramid/SKneog
 ## Operational model
 Agents are constrained entities moving inside a topology-aware operational environment.
 Execution paths are infrastructure-defined, not arbitrary. Coordination force is applied by orchestration layers beneath the visible semantic surface.
+
+## Multi-environment cognition contract
+EP-OSA treats ChatGPT, Gemini, Claude, CLI runtimes, and other hosts as interchangeable execution environments.
+- Model != system.
+- Persistent project state must live in external memory/state substrates.
+- Environment adapters reconstruct runtime via manifests, provider maps, and contracts.
 
 ## Guardrails
 - Keep runtime minimal and orchestration-first.
@@ -50,6 +58,10 @@ EP-OSA-Core repository is designed as a machine-interpretable environment:
 - stable semantic topology with predictable paths;
 - schema-first execution truth;
 - contract-level boundaries between layers;
+- ontology + invariant anchors for retrieval and context loading;
+- environment-manifest based runtime reconstruction.
+
+See `SYSTEM_MAP.md`, `ontology/`, `context/`, `schemas/`, `contracts/`, and `environments/*/manifests/` for operational entrypoints.
 - ontology + invariant anchors for retrieval and context loading.
 
 See `SYSTEM_MAP.md`, `ontology/`, `context/`, `schemas/`, and `contracts/` for operational entrypoints.

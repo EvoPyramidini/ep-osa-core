@@ -1,0 +1,8 @@
+{
+  "environment": "gemini",
+  "providers": [
+    { "type": "github", "role": "canonical_state", "path": "/" },
+    { "type": "gdrive", "role": "dynamic_memory", "path": "/gemini-runtime/" },
+    { "type": "localfs", "role": "execution_artifacts", "path": "/workspace/" }
+  ]
+}

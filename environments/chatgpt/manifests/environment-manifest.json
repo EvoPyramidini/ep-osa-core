@@ -1,0 +1,9 @@
+{
+  "environment": "chatgpt",
+  "runtime_profile": "codex-runtime",
+  "capabilities": ["text_generation", "code_synthesis", "tool_orchestration"],
+  "allowed_actions": ["read_repo", "edit_repo", "run_checks", "create_artifacts"],
+  "memory_map": "environments/chatgpt/manifests/memory-map.json",
+  "risk_level": "medium",
+  "execution_scope": "governed-repo-operations"
+}
