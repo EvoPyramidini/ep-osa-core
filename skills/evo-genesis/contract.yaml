@@ -1,0 +1,42 @@
+contract:
+  name: evo_genesis_mutation
+  version: 1.0.0
+  description: Contract for triggering generation and mutation events on EvoGenesis
+  
+  input_schema:
+    type: object
+    required: [operation_type, parameters]
+    properties:
+      operation_type:
+        type: string
+        enum: [bootstrap, mutate, spawn_agent]
+      parameters:
+        type: object
+        description: Configuration parameters for the generation
+        properties:
+          complexity_level:
+            type: integer
+            minimum: 1
+            maximum: 10
+          target_topology:
+            type: string
+          seed_data:
+            type: object
+
+  output_schema:
+    type: object
+    required: [job_id, status]
+    properties:
+      job_id:
+        type: string
+        description: Async job tracking ID
+      status:
+        type: string
+        enum: [pending, in_progress, completed, failed]
+      result_payload:
+        type: object
+        description: The generated structure (only present if completed synchronously)
+
+  error_handling:
+    expected_errors: [insufficient_resources, invalid_topology, validation_failed]
+    recovery_strategy: abort_and_notify_user

@@ -1,0 +1,43 @@
+contract:
+  name: evopyramid_ai_interaction
+  version: 1.0.0
+  description: Data structures for communicating with the evopyramid-ai backend
+  
+  input_schema:
+    type: object
+    required: [endpoint, payload]
+    properties:
+      endpoint:
+        type: string
+        enum: [generate_completion, analyze_data]
+      payload:
+        type: object
+        description: The data to be sent to the AI engine
+        properties:
+          prompt:
+            type: string
+          context_id:
+            type: string
+          temperature:
+            type: number
+            default: 0.7
+
+  output_schema:
+    type: object
+    required: [status, result]
+    properties:
+      status:
+        type: string
+        enum: [success, failure, timeout]
+      result:
+        type: object
+        description: The output from the AI engine
+        properties:
+          content:
+            type: string
+          tokens_used:
+            type: integer
+
+  error_handling:
+    expected_errors: [timeout, connection_refused, rate_limit_exceeded]
+    recovery_strategy: exponential_backoff_retry

@@ -1,0 +1,119 @@
+environment:
+  name: claude
+  version: 1.0-alpha
+  status: production
+  model_family: claude-4
+
+metadata:
+  owner: Anthropic
+  agent_type: host_and_participant
+  maintained_since: 2026-05-18
+  documentation_url: environments/claude/README.md
+  skill_url: skills/claude-osa-agent/SKILL.md
+
+models:
+  default: claude-sonnet-4-6
+  powerful: claude-opus-4-6
+  fast: claude-haiku-4-5-20251001
+
+capabilities:
+  - name: constitutional_reasoning
+    description: Interprets and enforces EP-OSA governance principles
+    confidence: high
+  - name: skill_host_execution
+    description: Natively executes skills defined in skills/ directory
+    confidence: high
+  - name: schema_contract_generation
+    description: Creates and validates YAML/JSON schemas and contracts
+    confidence: high
+  - name: code_execution
+    description: Executes bash, Python in sandboxed container
+    confidence: high
+  - name: artifact_generation
+    description: Produces React, HTML, SVG, Mermaid, Markdown artifacts
+    confidence: high
+  - name: persistent_artifact_storage
+    description: Cross-session key-value storage via window.storage in artifacts
+    confidence: high
+  - name: web_search_and_fetch
+    description: Live web search and full page content retrieval
+    confidence: high
+  - name: multimodal_analysis
+    description: Image, PDF, document understanding
+    confidence: high
+  - name: mcp_gmail
+    description: Email read/compose/send via Gmail MCP
+    confidence: high
+    url: https://gmailmcp.googleapis.com/mcp/v1
+  - name: mcp_google_calendar
+    description: Calendar events and scheduling via Google Calendar MCP
+    confidence: high
+    url: https://calendarmcp.googleapis.com/mcp/v1
+  - name: mcp_google_drive
+    description: File/folder management via Google Drive MCP
+    confidence: high
+    url: https://drivemcp.googleapis.com/mcp/v1
+  - name: office_document_generation
+    description: DOCX, PPTX, XLSX via skill layer (python-docx, pptx, openpyxl)
+    confidence: high
+
+limitations:
+  - name: stateless_between_sessions
+    description: No persistent process; session context lost on conversation end
+    impact: high
+    mitigation: artifact_storage + claude_ai_memory
+  - name: probabilistic_outputs
+    description: Non-deterministic generation; constrain via schema/contract
+    impact: medium
+    mitigation: schema_validation + post_condition_checks
+  - name: context_window_limit
+    description: 200k token maximum; practical complex tasks ~100k
+    impact: medium
+    mitigation: cold/warm/hot load profiles
+  - name: bash_network_allowlist
+    description: Bash execution limited to allowlisted domains
+    impact: low
+    mitigation: use_web_search_tool_instead
+
+memory:
+  primary_session:
+    proportion: "50-60%"
+    type: conversation_context
+    persistence: session_only
+  buffer_artifacts:
+    proportion: "30%"
+    type: artifact_key_value_storage
+    persistence: cross_session_permanent
+    api: window.storage
+  reserve_semantic:
+    proportion: "10%"
+    type: claude_ai_memory
+    persistence: permanent
+    requirement: user_must_enable
+
+routing:
+  constitutional_reasoning:   native
+  skill_execution:            native
+  orchestration_coordination: high
+  artifact_generation:        high
+  mcp_integration:            high
+  web_research:               high
+  code_execution:             high
+  document_creation:          high
+  multimodal_analysis:        medium
+  real_time_monitoring:       low   # route to local_runtime
+  repository_commits:         low   # route to github environment
+
+integration:
+  request_format: natural_language + structured_context
+  response_format: natural_language + files + artifacts
+  context_loading: cold_warm_hot_profiles
+  trace_required: true
+  audit_level: full
+  constitution_compliance: mandatory
+
+tracing:
+  trace_id_required: true
+  audit_level: full
+  format: json
+  storage: session_context + optional_artifact_storage

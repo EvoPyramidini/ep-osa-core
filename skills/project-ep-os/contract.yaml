@@ -1,0 +1,39 @@
+contract:
+  name: project_ep_os_ui_update
+  version: 1.0.0
+  description: Contract for pushing updates to the local browser and Pyramid widget
+  
+  input_schema:
+    type: object
+    required: [action, target_component, data]
+    properties:
+      action:
+        type: string
+        enum: [update_state, notify, highlight]
+      target_component:
+        type: string
+        enum: [pyramid_widget, chat_interface, global_nexus]
+      data:
+        type: object
+        description: The new state or message payload
+        properties:
+          color_hex:
+            type: string
+          message_text:
+            type: string
+          animation_type:
+            type: string
+
+  output_schema:
+    type: object
+    required: [acknowledged, timestamp]
+    properties:
+      acknowledged:
+        type: boolean
+      timestamp:
+        type: string
+        format: date-time
+
+  error_handling:
+    expected_errors: [component_not_found, rendering_error]
+    recovery_strategy: log_and_continue

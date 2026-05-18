@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://evopyramid.com/schemas/core/capability_discovery.json",
+  "title": "Agent Capability Discovery Protocol",
+  "description": "Standard schema for agents to report their available skills and capabilities to the EP-OSA orchestrator.",
+  "type": "object",
+  "required": ["agent_identity", "capabilities"],
+  "properties": {
+    "agent_identity": {
+      "type": "object",
+      "required": ["name", "version", "constitutional_compliance_flag"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The unique identifier of the external agent."
+        },
+        "version": {
+          "type": "string",
+          "description": "Semantic versioning of the agent's capability set."
+        },
+        "constitutional_compliance_flag": {
+          "type": "boolean",
+          "description": "Must be true. Asserts that the agent operates within Layer 1 Constitutional rules of EP-OSA.",
+          "const": true
+        }
+      }
+    },
+    "capabilities": {
+      "type": "array",
+      "description": "List of skills the agent exposes.",
+      "items": {
+        "type": "object",
+        "required": ["skill_name", "description", "input_schema", "output_schema", "error_handling"],
+        "properties": {
+          "skill_name": {
+            "type": "string",
+            "pattern": "^[a-z0-9_-]+$"
+          },
+          "description": {
+            "type": "string"
+          },
+          "input_schema": {
+            "type": "object",
+            "description": "JSON Schema defining expected input."
+          },
+          "output_schema": {
+            "type": "object",
+            "description": "JSON Schema defining guaranteed output."
+          },
+          "resource_limits": {
+            "type": "object",
+            "properties": {
+              "timeout_ms": {
+                "type": "integer"
+              },
+              "is_async": {
+                "type": "boolean"
+              }
+            }
+          },
+          "error_handling": {
+            "type": "object",
+            "required": ["expected_errors"],
+            "properties": {
+              "expected_errors": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
