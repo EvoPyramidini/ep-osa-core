@@ -23,6 +23,7 @@ The HQ layer is a **coordination consciousness layer**, not a centralized server
 - semantic routing across environments;
 - protocol-level coordination between agents and capabilities;
 - runtime reconstruction from machine-readable state.
+- protocol-level coordination between agents and capabilities.
 
 ### Out-of-scope for EP-OSA-Core
 Memory-heavy and data-plane cognition systems are externalized to Pyramid/SKneogen layers, including:
@@ -51,6 +52,7 @@ EP-OSA treats ChatGPT, Gemini, Claude, CLI runtimes, and other hosts as intercha
 ## Final ecosystem model
 Pyramid -> Topology Engine -> Memory Layer <-> Capability Layer -> External Infrastructure.
 
+
 ## LLM-native repository contract
 EP-OSA-Core repository is designed as a machine-interpretable environment:
 - stable semantic topology with predictable paths;
@@ -60,3 +62,35 @@ EP-OSA-Core repository is designed as a machine-interpretable environment:
 - environment-manifest based runtime reconstruction.
 
 See `SYSTEM_MAP.md`, `ontology/`, `context/`, `schemas/`, `contracts/`, and `environments/*/manifests/` for operational entrypoints.
+- ontology + invariant anchors for retrieval and context loading.
+
+See `SYSTEM_MAP.md`, `ontology/`, `context/`, `schemas/`, and `contracts/` for operational entrypoints.
+# EP-OSA Topology-First Architecture
+
+## Principle
+EP-OSA core must remain **lightweight coordination intelligence**, not a monolithic AI runtime.
+
+## System split
+
+### 1) Core (coordination nucleus)
+- routing
+- fields
+- signals
+- topology
+- contracts
+
+### 2) Memory ecosystem (external cognition)
+- operational memory
+- retrieval (RAG)
+- semantic graph structures
+- archaeology and dormant knowledge layers
+
+### 3) Capability ecosystem (execution)
+- tools and scripts
+- providers and services
+- automation chains
+
+## Guardrails
+- Keep runtime minimal and orchestration-first.
+- Avoid coupling memory internals directly into core runtime.
+- Avoid giant-agent composition that collapses boundaries.
