@@ -21,6 +21,10 @@
 ## Context Loading Profiles
 - Cold: philosophy, architecture, ontology, invariants.
 - Warm: active schemas, contracts, current ADR set, environment manifests.
+
+## Context Loading Profiles
+- Cold: philosophy, architecture, ontology, invariants.
+- Warm: active schemas, contracts, current ADR set.
 - Hot: task state, changed files, execution trace window.
 
 ## Source of Truth Priority
@@ -42,3 +46,9 @@
 - Human-readable docs explain intent and rationale.
 - Machine-readable schemas, contracts, and manifests govern executable truth.
 - If prose conflicts with schema/contract/manifest rules, machine-readable artifacts win.
+5. docs/
+
+## Navigation Contract
+- Human-readable docs explain intent and rationale.
+- Machine-readable schemas and contracts govern executable truth.
+- If prose conflicts with schema/contract rules, schema/contract wins.
