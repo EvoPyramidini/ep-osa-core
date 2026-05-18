@@ -46,6 +46,10 @@
 - Human-readable docs explain intent and rationale.
 - Machine-readable schemas, contracts, and manifests govern executable truth.
 - If prose conflicts with schema/contract/manifest rules, machine-readable artifacts win.
+
+
+## Federation Anchor
+- `environments/federation-map.json` defines active environment mesh roles and synchronization invariants.
 5. docs/
 
 ## Navigation Contract

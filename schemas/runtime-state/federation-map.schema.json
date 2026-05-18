@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ep-osa-core/schemas/runtime-state/federation-map.schema.json",
+  "title": "Federation Map",
+  "type": "object",
+  "required": ["version", "nodes", "invariants"],
+  "properties": {
+    "version": { "type": "string" },
+    "nodes": {
+      "type": "array",
+      "items": { "$ref": "environment-node.schema.json" }
+    },
+    "invariants": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "sync_rules": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": false
+}
