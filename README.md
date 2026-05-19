@@ -146,6 +146,31 @@ See `docs/ARCHITECTURE_RULES.md` for comprehensive governance:
 - Observability requirements
 - Evolution and failure handling
 
+## Recent Architecture Additions (2026-05-19)
+
+### Новые документы этой сессии
+
+| Документ | Расположение | Описание |
+|----------|-------------|----------|
+| **PYRAMID_ENVIRONMENT_RULES.md** | `docs/` | Физические законы среды Пирамиды + **Rule 6: Server Environment Anchor** (`us-west / America`) |
+| **MAGNETIC_ORCHESTRATION_MANIFEST.md** | `docs/` | Weightless Control Protocol — Field-Driven Cognition, Puck/Field/Entropy primitives |
+| **COGNITIVE_MEMORY_PYRAMID.md** | `docs/` | Hierarchical Cognitive Memory — 5 слоёв (L0–L4), retrieval flow, Insight Intake Protocol, Quantum Jumps |
+
+### Изменения в `asdi-ep-os` (UI Layer)
+
+- **App.tsx** — статус-баннер обновлён: `US-WEST ENVIRONMENT ACTIVE`
+- **App.tsx** — Swarm Terminal: добавлены лог-записи о миграции региона с меткой времени
+- Регион `us-west (America)` теперь — **каноническая среда выполнения** всех Z15-сервисов
+
+### Test Run Results (Quantum Jumps)
+
+```
+EvoPyramid OS / tests/  →  61 passed, 0 failed, 10 warnings  (2.67s)
+```
+
+Предупреждения: Pydantic enum serializer — не блокируют работу, требуют `use_enum_values=True` при следующей итерации.
+
+
 ## Terminology
 
 See `docs/TERMINOLOGY.md` for complete glossary:
