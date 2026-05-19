@@ -1,0 +1,49 @@
+{
+  "agent_identity": {
+    "name": "ep-osa-memory",
+    "version": "1.0.0",
+    "constitutional_compliance_flag": true
+  },
+  "capabilities": [
+    {
+      "skill_name": "ep-osa-memory",
+      "description": "Управляет жизненным циклом контейнеров памяти и механизмом Квантового Скачка.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": ["create_container", "extract_context", "trigger_quantum_leap", "broadcast_receive"]
+          },
+          "container_type": { "type": "string" },
+          "content": { "type": "object" },
+          "query": { "type": "string" },
+          "quantum_leap_probability": { "type": "number" },
+          "broadcast_message": { "type": "object" }
+        },
+        "required": ["action"]
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success", "error"]
+          },
+          "container_id": { "type": "string" },
+          "context": { "type": "array" },
+          "is_quantum_leap": { "type": "boolean" },
+          "error_message": { "type": "string" }
+        },
+        "required": ["status"]
+      },
+      "resource_limits": {
+        "timeout_ms": 5000,
+        "is_async": false
+      },
+      "error_handling": {
+        "expected_errors": ["invalid_action", "anchor_not_found", "insufficient_anchors"]
+      }
+    }
+  ]
+}

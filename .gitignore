@@ -216,3 +216,10 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Node / Web
+node_modules/
+mocks/
+
+# VS Code
+.vscode/
