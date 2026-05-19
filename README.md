@@ -134,7 +134,7 @@ Interaction model:
 
 ## Architecture Rules
 
-See `ARCHITECTURE_RULES.md` for comprehensive governance:
+See `docs/ARCHITECTURE_RULES.md` for comprehensive governance:
 - Constitutional foundation
 - Contract-based interaction
 - Schema-driven design
@@ -148,7 +148,7 @@ See `ARCHITECTURE_RULES.md` for comprehensive governance:
 
 ## Terminology
 
-See `TERMINOLOGY.md` for complete glossary:
+See `docs/TERMINOLOGY.md` for complete glossary:
 - Core concepts (EvoAbsolut, HybridSession, etc.)
 - Memory systems (EvoMemorySystem, QuantumBackpack)
 - Quantum mechanics (Quantum Jumps, Coherence)
@@ -183,19 +183,13 @@ Use `research/` for exploration:
 
 ```
 ep-osa-core/
-├── constitution/       # Governance principles
-├── contracts/          # Interface contracts
-├── schemas/            # Data definitions
-├── runtime/            # Execution engines
+├── docs/               # Architecture rules, terminology, and governance
+├── contracts/          # Schemas and API contracts
+├── src/                # Runtime, orchestration, agents, memory
 ├── skills/             # Agent capabilities
-├── orchestration/      # Workflow coordination
-├── tracing/            # Observability
-├── memory/             # Cognitive storage
-├── research/           # Experimental components
+├── research/           # Experimental components and brainstorms
 ├── tests/              # Test suites
 ├── README.md           # This file
-├── ARCHITECTURE_RULES.md   # Detailed rules
-├── TERMINOLOGY.md      # Complete glossary
 └── requirements.txt    # Python dependencies
 ```
 
@@ -225,9 +219,9 @@ pytest --cov=ep_osa_core
 
 ## Resources
 
-- **Architecture Rules**: See `ARCHITECTURE_RULES.md`
-- **Terminology**: See `TERMINOLOGY.md`  
-- **Constitution**: See `constitution/ep-osa-core-constitution.md`
+- **Architecture Rules**: See `docs/ARCHITECTURE_RULES.md`
+- **Terminology**: See `docs/TERMINOLOGY.md`  
+- **Constitution**: See `docs/constitution/ep-osa-core-constitution.md`
 - **Layer Details**: See `{layer}/README.md`
 
 ## License
