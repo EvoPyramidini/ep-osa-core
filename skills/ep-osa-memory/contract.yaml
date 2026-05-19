@@ -1,0 +1,51 @@
+# Contract for ep-osa-memory
+
+skill_name: "ep-osa-memory"
+version: "1.0.0"
+description: "Управляет жизненным циклом контейнеров памяти и механизмом Квантового Скачка."
+
+input_schema:
+  type: object
+  properties:
+    action:
+      type: string
+      enum: ["create_container", "extract_context", "trigger_quantum_leap", "broadcast_receive"]
+      description: "Действие, которое нужно выполнить."
+    container_type:
+      type: string
+      description: "Тип контейнера (мысль, лог, сессия). Требуется для create_container."
+    content:
+      type: object
+      description: "Содержимое памяти. Требуется для create_container."
+    query:
+      type: string
+      description: "Поисковый запрос для extract_context."
+    quantum_leap_probability:
+      type: number
+      description: "Вероятность квантового скачка при извлечении контекста (от 0.0 до 1.0)."
+      default: 0.0
+    broadcast_message:
+      type: object
+      description: "Сообщение от PEAR Broadcast Engine."
+  required: ["action"]
+
+output_schema:
+  type: object
+  properties:
+    status:
+      type: string
+      enum: ["success", "error"]
+    container_id:
+      type: string
+      description: "ID созданного контейнера."
+    context:
+      type: array
+      items:
+        type: object
+      description: "Извлеченные контейнеры памяти."
+    is_quantum_leap:
+      type: boolean
+      description: "Флаг, указывающий, был ли совершен квантовый скачок при извлечении."
+    error_message:
+      type: string
+  required: ["status"]

@@ -7,6 +7,7 @@ This layer defines composable, contract-respecting capabilities that agents can 
 ## Purpose
 
 Skills provide:
+
 - Composable units of capability
 - Clear input/output contracts
 - Schema-driven interaction
@@ -31,18 +32,21 @@ class Skill:
 ## Skill Categories
 
 ### Foundation Skills
+
 - State observation
 - Memory access
 - Basic operations
 - Error handling
 
 ### Domain Skills
+
 - Domain-specific expertise
 - Complex behaviors
 - Multi-step operations
 - Integration points
 
 ### Composite Skills
+
 - Combine multiple skills
 - Sequence operations
 - Handle coordination
@@ -51,6 +55,7 @@ class Skill:
 ## Skill Properties
 
 ### Required
+
 - Name (unique within skill namespace)
 - Version
 - Input schema
@@ -58,6 +63,7 @@ class Skill:
 - Execute function
 
 ### Optional
+
 - Pre-conditions
 - Post-conditions
 - Side-effects
@@ -79,7 +85,8 @@ class Skill:
 ## Skill Composition
 
 Skills can be combined:
-```
+
+```python
 SkillA | SkillB | SkillC  # Sequential
 SkillA & SkillB           # Parallel
 if condition: SkillA else: SkillB
@@ -89,6 +96,7 @@ while condition: Skill
 ## Error Handling
 
 Skills must handle:
+
 - Invalid input
 - Timeout conditions
 - Resource exhaustion
@@ -98,6 +106,7 @@ Skills must handle:
 ## Skill Development
 
 ### Creating a New Skill
+
 1. Define contract in contracts/
 2. Define schemas in schemas/
 3. Implement in skills/
@@ -106,6 +115,7 @@ Skills must handle:
 6. Add integration tests
 
 ### Skill Versioning
+
 - Follow semantic versioning
 - Maintain backward compatibility
 - Deprecate old versions gradually

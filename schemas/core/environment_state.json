@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "EnvironmentState",
+  "description": "The Magnetic Vector Field state defining the attractors and system pressure for Weightless Control.",
+  "properties": {
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "magnetic_fields": {
+      "type": "object",
+      "description": "The current semantic attractors. Keys are node/skill IDs, values are the gravitational pull (0.0 to 1.0).",
+      "patternProperties": {
+        "^[a-zA-Z0-9_-]+$": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        }
+      },
+      "additionalProperties": false
+    },
+    "entropy_level": {
+      "type": "number",
+      "description": "The current thermodynamic noise level (0.0 to 1.0) applied to break metastable equilibrium.",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "default": 0.1
+    },
+    "system_pressure": {
+      "type": "number",
+      "description": "Global urgency multiplier. 1.0 is normal, 2.0 indicates critical priority affecting Puck momentum.",
+      "minimum": 0.0,
+      "default": 1.0
+    },
+    "constraints": {
+      "type": "array",
+      "description": "Active global constraints acting as repulsors (negative gravity).",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "timestamp",
+    "magnetic_fields",
+    "entropy_level",
+    "system_pressure"
+  ]
+}

@@ -10,10 +10,12 @@ description: >
 This skill acts as the **"Border Controller"** (Фейс-контроль). It bridges the static core architecture with dynamic, external backend agents (like `EvoGenesis` or `evopyramid-ai`).
 
 ## Identity & Purpose
+
 - **Role:** Dynamic Contract Validation and Skill Registration.
 - **Scope:** Runs during session initialization (Warm Load) or when a new backend agent connects.
 
 ## Execution Flow
+
 1. **Query:** The orchestrator sends a capability request to the target backend agent's discovery endpoint.
 2. **Receive:** The backend agent responds with its manifest payload.
 3. **Validate:** The orchestrator validates the payload strictly against `schemas/core/capability_discovery.json`.
@@ -22,9 +24,11 @@ This skill acts as the **"Border Controller"** (Фейс-контроль). It b
 6. **Trace:** Success or failure is logged in Layer 7 Tracing.
 
 ## Usage Rules
+
 - NEVER bypass schema validation.
 - If an agent's schema changes mid-session, the connection must be dropped and renegotiated.
 - Dynamically loaded skills persist only for the duration of the session unless anchored explicitly.
 
 ## Example Trigger
+
 "Query the `EvoGenesis` agent for its available capabilities and load them if compliant."

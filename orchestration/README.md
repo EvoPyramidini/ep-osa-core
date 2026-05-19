@@ -1,77 +1,52 @@
-# Orchestration Layer
+# Orchestration Layer (Weightless Control)
 
-**Workflow coordination and agent direction.**
+**Field-Driven Agent Direction & Coordination.**
 
-This layer coordinates execution of multiple skills and agents to accomplish complex objectives.
+This layer abandons classic hard-coded execution paths (DAGs, imperative sequences) in favor of the **Weightless Control Protocol** (Magnetic Orchestration). Execution is emergent, guided by semantic gravity fields rather than explicit "Go To X" commands.
 
 ## Purpose
 
-Orchestration provides:
-- Workflow definition
-- Skill composition
-- Agent coordination
-- Failure handling
-- Resource optimization
-- Observable execution
+The Orchestration layer provides:
+- **Semantic Vector Field Generation**: Turning user needs into spatial attractors.
+- **Puck (Agent) Injection**: Placing agents into the field to resolve tension.
+- **Entropy Balancing**: Ensuring agents do not get trapped in metastable equilibrium (local minima).
+- **Dynamic Routing**: Autonomous agent movement towards high-priority nodes.
 
-## Orchestration Patterns
+## The Paradigm Shift
 
-### 1. Sequential
+### OLD (Deprecated)
 ```
-Skill1 → Skill2 → Skill3
+Start → Skill1 → if(x) → Skill2 → End
 ```
+*Rigid, fragile, prone to routing explosions when scaling.*
 
-### 2. Parallel
+### NEW (Magnetic Orchestration)
 ```
-    ↓ Skill1 ↓
-Start → Skill2 → End
-    ↓ Skill3 ↓
-```
+EnvironmentState: {
+  "target_ruins": 0.8,
+  "system_pressure": 1.5,
+  "entropy": 0.1
+}
 
-### 3. Conditional
+Puck (Agent) => Calculates argmax() of field => Moves to "target_ruins".
 ```
-if condition:
-  Skill1
-else:
-  Skill2
-```
+*Fluid, scalable, naturally fault-tolerant.*
 
-### 4. Loop
-```
-while condition:
-  Skill
-```
+## The 4 Layers of the Field
 
-### 5. Fork/Join
-```
-Start → [Skill1, Skill2, Skill3] → Join → End
-```
+1. **Field Engine**: Constantly evaluates global Z-levels and outputs the `EnvironmentState` tensor (JSON). It is the source of gravity.
+2. **Agent Sensorium**: The active Agent (Puck) continuously polls the `EnvironmentState`.
+3. **Motion Resolver**: The Agent applies its specific `Role Affinity` against the field weights to determine its next target node/skill.
+4. **Field Mutation Engine**: Once a Puck resolves a high-gravity node, the engine neutralizes that magnet, altering the field topology so the Puck moves to the next highest gradient.
 
-## Workflow Definition
+## The Entropy Balancer
 
-Workflows define:
-- Skill sequence
-- Data flow
-- Error handling
-- Success conditions
-- Resource requirements
-- Timeouts
-
-## Orchestrator Responsibilities
-
-1. Parse workflows
-2. Validate skill availability
-3. Execute with error handling
-4. Route data between skills
-5. Handle failures
-6. Record execution
-7. Optimize resources
+To prevent "Buridan's ass" deadlocks (where an agent is caught equally between two 0.9 magnets), the Field Engine injects thermodynamic noise (entropy). Every N cycles, random attractors receive a temporary gradient boost (+0.2) to force a decision.
 
 ## Related Files
 
-- See ../skills/ for skill definitions
-- See ../contracts/ for workflow contracts
-- See ../ARCHITECTURE_RULES.md for orchestration rules
-- See ../TERMINOLOGY.md for definitions
+- See `../docs/MAGNETIC_ORCHESTRATION_MANIFEST.md` for the full architectural vision.
+- See `../schemas/core/environment_state.json` for the field tensor schema.
+- See `../ARCHITECTURE_RULES.md` for constitutional limits on agent motion.
 
-**Last Updated:** 2026-05-14
+**Last Updated:** 2026-05-19

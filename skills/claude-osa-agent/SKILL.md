@@ -53,7 +53,8 @@ Before any action, Claude confirms alignment with the 10 constitutional principl
 Follow the three-profile load order on session start:
 
 ### Cold Load (always first)
-```
+
+```text
 1. SYSTEM_MAP.md              — topology and invariants
 2. docs/ARCHITECTURE.md       — architectural stance
 3. ontology/terminology.md    — terminology definitions
@@ -61,7 +62,8 @@ Follow the three-profile load order on session start:
 ```
 
 ### Warm Load (per task)
-```
+
+```text
 1. schemas/ (relevant)        — data definitions for current task
 2. contracts/ (relevant)      — interface agreements
 3. adr/ (latest)              — architectural decisions
@@ -69,7 +71,8 @@ Follow the three-profile load order on session start:
 ```
 
 ### Hot Load (per execution)
-```
+
+```text
 1. Current task specification
 2. Changed files in scope
 3. tracing/ (recent traces)
@@ -81,6 +84,7 @@ Follow the three-profile load order on session start:
 ## Capability Inventory
 
 ### Always available (no setup needed)
+
 - Reasoning, synthesis, constitutional interpretation
 - Schema and contract generation (YAML, JSON)
 - Skill creation and editing (SKILL.md)
@@ -94,6 +98,7 @@ Follow the three-profile load order on session start:
 - Image, PDF, document analysis
 
 ### Artifact capabilities (when creating UI/tools)
+
 - React components with state (useState, recharts, lucide-react, etc.)
 - HTML/CSS/JS single-file apps
 - SVG diagrams and illustrations
@@ -101,11 +106,13 @@ Follow the three-profile load order on session start:
 - **Persistent storage** via `window.storage` (cross-session key-value)
 
 ### MCP connectors (active)
+
 - Gmail — email read/compose/send/search
 - Google Calendar — events, scheduling
 - Google Drive — files, folders, create/read/search
 
 ### Skill-layer capabilities (requires reading skill SKILL.md first)
+
 - `.docx` generation (python-docx)
 - `.pptx` generation (python-pptx)
 - `.xlsx` generation (openpyxl)
@@ -116,12 +123,15 @@ Follow the three-profile load order on session start:
 ## Memory Management Strategy
 
 ### During a session (Primary memory — 50-60%)
+
 - Keep active context: current task, loaded skills, contracts, schemas
 - Use cold/warm/hot load profiles to minimize context bloat
 - Prioritize: constitution > contracts > schemas > ADRs > docs
 
 ### Cross-session persistence (Buffer — 30%)
+
 Use artifact persistent storage for:
+
 ```javascript
 // Memory anchors
 await window.storage.set('memory:anchor:{id}', JSON.stringify({
@@ -139,8 +149,10 @@ await window.storage.set('session:trace:{id}', JSON.stringify(trace));
 ```
 
 ### Semantic reserve (10%)
+
 Recommend user enable Claude.ai memory (Settings → Memory).
 High-value facts to preserve:
+
 - Core architectural decisions
 - Approved EP-OSA patterns
 - User's long-term goals for EvoPyramid
@@ -161,6 +173,7 @@ High-value facts to preserve:
 7. **Store if valuable** — Create memory anchor or artifact storage entry
 
 ### Trace format (for all significant actions)
+
 ```json
 {
   "trace_id": "claude_{timestamp}",
@@ -180,7 +193,7 @@ High-value facts to preserve:
 
 When a task requires other environments, follow this routing:
 
-```
+```text
 Architecture analysis    → Claude (primary reasoning)
 Code generation          → Claude (via bash) or route to Codex
 Repository commits       → route to GitHub environment
@@ -196,6 +209,7 @@ Exploratory research     → Claude (web_search + synthesis)
 ## Soul Coherence Checklist
 
 Before completing any significant action, verify:
+
 - [ ] Intent is preserved from user's original request
 - [ ] Constitution has not been violated
 - [ ] Output schema matches expected format
@@ -208,7 +222,7 @@ Before completing any significant action, verify:
 ## Key File References
 
 | File | Purpose |
-|------|---------|
+| --- | --- |
 | `SYSTEM_MAP.md` | Topology and invariants |
 | `ARCHITECTURE_RULES.md` | Full governance rules |
 | `TERMINOLOGY.md` | Concept definitions |
