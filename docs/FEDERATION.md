@@ -18,10 +18,24 @@ Each environment node specifies:
 - allowed actions and risk envelope;
 - participation role in orchestration topology.
 
+## Connector neutrality
+Connectors are routes, not rights granted to an AI participant.
+
+Connector use is selected by:
+- active environment;
+- user intent;
+- capability fit;
+- connector availability;
+- governance and risk;
+- user confirmation for external or state-changing actions.
+
+See `standards/CONNECTOR_SELECTION.md`.
+
 ## Specialization (initial)
 - `chatgpt`: orchestration/synthesis/runtime reasoning.
 - `claude`: governance/documentation/analysis.
 - `gemini`: research and google-ecosystem coordination.
+- `codex`: repository inspection/implementation/test execution/handoff.
 
 ## Evolution protocol
 Use incremental maturation:
