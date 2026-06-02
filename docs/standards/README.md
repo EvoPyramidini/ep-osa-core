@@ -7,4 +7,4 @@ Standards define reusable rules that are broader than a single environment, skil
 ## Current Standards
 
 - `CONNECTOR_SELECTION.md` - how AI environments select connector routes.
-
+- `MODEL_REPLACEMENT_SURVIVAL.md` - how EP-OSA survives replacement of AI models and products.

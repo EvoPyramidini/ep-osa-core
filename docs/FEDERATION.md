@@ -18,6 +18,15 @@ Each environment node specifies:
 - allowed actions and risk envelope;
 - participation role in orchestration topology.
 
+## Model replacement survival
+Architecture must survive model replacement.
+
+Models are replaceable. Environment is persistent.
+
+An environment is valid when another AI participant can reconstruct purpose, memory, artifacts, governance, and safe next action from repository artifacts without hidden chat state.
+
+See `standards/MODEL_REPLACEMENT_SURVIVAL.md`.
+
 ## Connector neutrality
 Connectors are routes, not rights granted to an AI participant.
 
