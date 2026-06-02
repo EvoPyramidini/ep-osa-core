@@ -12,6 +12,18 @@ The Environments layer provides:
 - Cross-environment orchestration
 - Execution ecology management
 - Environment governance
+- LLM app self-identification through local environment directories
+- File-backed skills, memory, and session handoff without mandatory backend routing
+
+## Agent Order
+
+EP-OSA environment execution follows this order:
+
+```text
+AI-agent -> LLM-app -> environment directory -> skills/memory/session context -> execution
+```
+
+See `AI_AGENT_LLM_APP_ENVIRONMENT.md` for the full protocol.
 
 ## Supported Environments
 
@@ -63,6 +75,24 @@ The Environments layer provides:
 
 **See:** `local_runtime/`
 
+### 7. Antigravity
+- Reserved LLM app environment
+- Future IDE and agent-workspace workflows
+
+**See:** `antigravity/`
+
+### 8. Google AI Studio
+- Reserved LLM app environment
+- Model prototyping and API-oriented workflows
+
+**See:** `google_ai_studio/`
+
+### 9. DeepSeek
+- Reserved LLM app environment
+- Reasoning, coding, and cost-aware execution paths
+
+**See:** `deepseek/`
+
 ## Key Principles
 
 ### 1. Environment Awareness
@@ -90,6 +120,9 @@ Each environment defines:
 - **Routing Priority**: How important it is for different tasks
 - **Integration Rules**: How to interact with it
 - **Governance Constraints**: What policies apply
+- **Bootstrap Rules**: How the LLM self-identifies and starts work
+- **Memory Map**: Which files count as durable environment memory
+- **Session Rules**: How chats, notebooks, pinned files, and handoffs are interpreted
 
 ## Orchestration Flow
 

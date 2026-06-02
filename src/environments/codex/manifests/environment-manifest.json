@@ -1,0 +1,42 @@
+{
+  "environment": "codex",
+  "display_name": "ChatGPT Codex",
+  "status": "draft",
+  "agent_order": [
+    "AI-agent",
+    "LLM-app",
+    "environment"
+  ],
+  "primary_role": "repository-native implementation, inspection, editing, verification, and handoff",
+  "bootstrap": "AGENT_BOOTSTRAP.md",
+  "memory_map": "manifests/memory-map.json",
+  "capabilities": [
+    "repository_inspection",
+    "code_editing",
+    "test_execution",
+    "git_workflow_support",
+    "documentation_updates",
+    "local_environment_reasoning"
+  ],
+  "limitations": [
+    "no_persistent_state_without_files",
+    "must_read_files_before_claiming_contents",
+    "cannot_assume_external_backend",
+    "probabilistic_generation"
+  ],
+  "preferred_tasks": [
+    "implementation",
+    "repository_refactoring",
+    "code_review",
+    "test_generation",
+    "documentation_as_code",
+    "environment_bootstrap_updates"
+  ],
+  "restricted_tasks": [
+    "unverified_business_claims",
+    "secret_handling_without_policy",
+    "large_architecture_rewrites_without_contract",
+    "destructive_git_operations_without_user_request"
+  ]
+}
+

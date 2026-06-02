@@ -1,0 +1,28 @@
+{
+  "environment": "codex",
+  "memory_sources": {
+    "local": [
+      "memory/README.md"
+    ],
+    "sessions": [
+      "sessions/README.md"
+    ],
+    "skills": [
+      "skills/README.md",
+      "../../../skills/README.md"
+    ],
+    "project": [
+      "../../../README.md",
+      "../../../docs/",
+      "../../../contracts/",
+      "../../"
+    ]
+  },
+  "rules": [
+    "Prefer repository facts over model assumptions.",
+    "Separate facts from hypotheses.",
+    "Use Codex environment bootstrap before substantial edits.",
+    "Record durable session knowledge in files when requested."
+  ]
+}
+
