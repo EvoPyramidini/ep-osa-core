@@ -24,6 +24,17 @@
       "enabled": true
     },
     {
+      "id": "codex",
+      "role": "implementer",
+      "specialization": "repository inspection/code editing/test execution/handoff",
+      "manifests": {
+        "environment_manifest": "environments/codex/manifests/environment-manifest.json",
+        "memory_map": "environments/codex/manifests/memory-map.json"
+      },
+      "priority": 25,
+      "enabled": true
+    },
+    {
       "id": "gemini",
       "role": "researcher",
       "specialization": "research/google ecosystem coordination",

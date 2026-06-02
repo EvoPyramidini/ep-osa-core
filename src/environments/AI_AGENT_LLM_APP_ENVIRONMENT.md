@@ -56,7 +56,7 @@ Each environment directory may contain:
     README.md
 ```
 
-Only `README.md` and `AGENT_BOOTSTRAP.md` are required for the first pass. Other files are optional until the environment needs them.
+For LLM app environments, `README.md` and `AGENT_BOOTSTRAP.md` are required for the first pass. Other files are optional until the environment needs them. Non-LLM adapters such as `github`, `m365`, or `local_runtime` may omit `AGENT_BOOTSTRAP.md` when they are not used as direct chat surfaces.
 
 ## 3. Self-Identification Flow
 
@@ -226,4 +226,3 @@ This protocol follows EP-OSA principles:
 - no hidden hardcoding;
 - backend optionality;
 - survivable session reconstruction.
-
