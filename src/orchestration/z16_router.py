@@ -1,216 +1,174 @@
 """
-EP-OSA Core — Z16 Trinity Memory Router
-Layer: Z16 (Memory Formation, Filtering, Backup & Pyramid Observation)
+Z16 — Trinity Memory Router
+============================
+Сердце маршрутизации EvoPyramid OS.
 
-Architecture:
-    Z17 (AlexCreator + AI) — generates INTENT
-    Z15 (LLM Environments) — executes ACTIONS
-    Z16 (THIS MODULE)      — observes BOTH, filters memory, forms Snapshots,
-                             routes data, and guards the Pyramid's evolution.
+Принимает намерение (intent) с Z17,
+определяет язык и контекст,
+распределяет в нужный сектор памяти:
 
-The "Skip" Pattern (Проскок):
-    Z17 and Z15 work together directly for speed.
-    Z16 watches silently, captures the dialogue, distills it into
-    provenance-tagged memory, and archives it. It is the Subconscious.
+  🟩 Green  → UK (Украинский)
+  🟨 Gold   → EN (Английский)
+  🟥 Red    → RU (Русский)
 
-Trinity Memory Clusters (Language-Bound):
-    🟩 Green [UK] — Ukrainian-tagged knowledge (AlexCreator's concepts)
-    🟨 Gold  [EN] — English-tagged logic (Watchman's structure)
-    🟥 Red   [RU] — Russian-tagged integration (Лётчик-Испытатель's context)
+Паттерн "проскока":
+  Z17 (Намерение) → Z16 (Фильтр/Маршрут) → Z15 (Исполнение)
+  ↑                                                    ↓
+  └──────────── Z16 (Снимок памяти) ◄──────────────────┘
 """
 
-import uuid
-import json
-from typing import Any, Dict, List, Optional
-from datetime import datetime, timezone
+import time
+import re
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Optional
 
 
-class MemoryCluster:
-    """A language-tagged memory container. One of three in the Trinity."""
+class MemorySector(str, Enum):
+    GREEN = "green"   # UK — Украинский
+    GOLD  = "gold"    # EN — Английский
+    RED   = "red"     # RU — Русский
+    GRAY  = "gray"    # Неопределен — Router сам решает
 
-    def __init__(self, language: str, color: str):
-        self.language = language    # UK | EN | RU
-        self.color = color          # Visual identity on the board
-        self._store: List[Dict[str, Any]] = []
 
-    def ingest(self, data: Dict[str, Any]) -> str:
-        """Accept a memory fragment into this cluster."""
-        entry = {
-            "id": f"mem-{uuid.uuid4().hex[:8]}",
-            "timestamp": datetime.now(timezone.utc).isoformat(),
-            "language": self.language,
-            "data": data,
-        }
-        self._store.append(entry)
-        return entry["id"]
+@dataclass
+class RoutedIntent:
+    """Результат маршрутизации через Z16."""
+    original_text: str
+    detected_language: str
+    sector: MemorySector
+    z15_target: str              # Какой Z15-агент должен исполнить
+    gravity_weight: float        # Магнитный вес (0.0 — 1.0)
+    memory_snapshot: dict        # Слепок памяти для передачи на Z15
+    timestamp: float = field(default_factory=time.time)
 
-    def retrieve_all(self) -> List[Dict[str, Any]]:
-        return self._store.copy()
 
-    def retrieve_latest(self, n: int = 5) -> List[Dict[str, Any]]:
-        return self._store[-n:]
+# ─── Language Detection ───────────────────────────────────────────────────────
 
+# Простые unicode-ориентиры для детекции языка без внешних зависимостей
+_UK_PATTERN = re.compile(r'[іїєґІЇЄҐ]')   # Уникальные украинские символы
+_RU_PATTERN = re.compile(r'[ёъЁЪ]')        # Уникальные русские символы
+_EN_PATTERN = re.compile(r'^[a-zA-Z\s\W\d]+$')  # Только латиница
+
+
+def detect_language(text: str) -> tuple[str, MemorySector]:
+    """
+    Определяет язык текста и возвращает (lang_code, MemorySector).
+    Без внешних библиотек — чистая локальная логика.
+    """
+    if _UK_PATTERN.search(text):
+        return "uk", MemorySector.GREEN
+    if _RU_PATTERN.search(text):
+        return "ru", MemorySector.RED
+    if _EN_PATTERN.match(text.strip()):
+        return "en", MemorySector.GOLD
+    # Кириллица без маркеров — по умолчанию RU
+    if re.search(r'[а-яА-Я]', text):
+        return "ru", MemorySector.RED
+    return "en", MemorySector.GOLD
+
+
+# ─── Gravity Weights ──────────────────────────────────────────────────────────
+
+# Магнитные веса для Z15-агентов (Magnetic Orchestration Algorithm)
+DEFAULT_GRAVITY: dict[str, float] = {
+    "antigravity_engine":  1.0,   # Основной агент — всегда активен
+    "gemini_advanced_hub": 0.8,   # Аналитика — высокий приоритет
+    "github_pipeline":     0.5,   # Git-операции — средний приоритет
+    "mcp_local_sensors":   0.4,   # MCP — по запросу
+    "gcp_firebase":        0.2,   # Облако — минимальный приоритет (суверенитет!)
+}
+
+
+def select_z15_agent(intent: dict, gravity: dict[str, float]) -> str:
+    """
+    Выбирает Z15-агента с максимальным весом гравитации для данного намерения.
+    """
+    task_type = intent.get("task_type", "general")
+
+    overrides = {
+        "code":    "gemini_advanced_hub",
+        "git":     "github_pipeline",
+        "file":    "mcp_local_sensors",
+        "memory":  "antigravity_engine",
+        "general": "antigravity_engine",
+    }
+
+    preferred = overrides.get(task_type, "antigravity_engine")
+    return max(gravity, key=lambda k: gravity[k] if k == preferred else gravity[k] * 0.5)
+
+
+# ─── Z16 Trinity Router ───────────────────────────────────────────────────────
 
 class Z16TrinityRouter:
     """
-    The Trinity Memory Router — Z16 Observer & Processor.
+    Маршрутизатор Z16 — Ферзь Пирамиды.
 
-    Responsibilities:
-    - Route intents from Z17 down to Z15 environments
-    - Observe session chat history and extract Provenance
-    - Feed memory into language-tagged Trinity clusters (Green/Gold/Red)
-    - Provide Snapshots to the server for storage and retrieval
-    - Report puck state to asdi-ep-os for 3D visualization
+    Принимает сырой intent от Z17,
+    определяет язык, выбирает Z15-агента,
+    формирует слепок памяти для передачи.
     """
 
     def __init__(self):
-        # Three language-tagged memory containers
-        self.green = MemoryCluster(language="UK", color="#10b981")   # Ukrainian
-        self.gold  = MemoryCluster(language="EN", color="#eab308")   # English
-        self.red   = MemoryCluster(language="RU", color="#ef4444")   # Russian
+        self._memory: dict[MemorySector, list[dict]] = {
+            MemorySector.GREEN: [],
+            MemorySector.GOLD:  [],
+            MemorySector.RED:   [],
+            MemorySector.GRAY:  [],
+        }
+        self._gravity = DEFAULT_GRAVITY.copy()
 
-        # Session snapshot store: session_id → latest snapshot
-        self._snapshots: Dict[str, Dict[str, Any]] = {}
-
-        # Puck registry (mirrors asdi-ep-os board state)
-        self._pucks = [
-            {"id": "puck_z17_nexus",      "z": 17, "x": 9, "y": 9, "color": "#eab308", "role": "AlexCreator & AI Nexus"},
-            {"id": "puck_z16_trinity",    "z": 16, "x": 9, "y": 9, "color": "#10b981", "role": "Trinity Memory Router"},
-            {"id": "puck_z15_environments","z": 15, "x": 9, "y": 9, "color": "#94a3b8", "role": "Colorless Environments"},
-        ]
-
-        print("[Z16] Trinity Router initialized. Clusters: 🟩UK 🟨EN 🟥RU")
-
-    # ─────────────────────────────────────────────────────────────────────────
-    # Core Routing
-    # ─────────────────────────────────────────────────────────────────────────
-    async def route(
-        self,
-        intent: str,
-        source_z: int,
-        target_z: int,
-        payload: Dict[str, Any],
-        session_id: Optional[str],
-        language: str = "RU",
-    ) -> Dict[str, Any]:
+    async def route(self, intent: dict) -> dict:
         """
-        Main routing logic. Routes intent and archives it into
-        the appropriate memory cluster based on language tag.
+        Главный метод маршрутизации.
+        Принимает словарь intent, возвращает RoutedIntent как dict.
         """
-        print(f"[Z16] Routing: Z{source_z} → Z{target_z} | intent='{intent}' | lang={language}")
+        text = intent.get("text", "")
+        lang, sector = detect_language(text)
+        z15_agent = select_z15_agent(intent, self._gravity)
 
-        # Archive into correct Trinity cluster
-        memory_fragment = {"intent": intent, "payload": payload, "session_id": session_id}
-        mem_id = self._ingest_by_language(language, memory_fragment)
+        # Сохраняем в сектор памяти
+        memory_entry = {
+            "text": text,
+            "lang": lang,
+            "timestamp": time.time(),
+            "z15_target": z15_agent,
+        }
+        self._memory[sector].append(memory_entry)
 
-        # Auto-generate a lightweight provenance entry
-        provenance = self._generate_provenance(intent, source_z, language, mem_id)
-
-        # Store in session snapshot
-        if session_id:
-            self._update_snapshot(session_id, intent, provenance, payload)
-
-        return {
-            "routed": True,
-            "memory_id": mem_id,
-            "cluster": language,
-            "provenance": provenance,
+        # Слепок последних 5 записей из нужного сектора
+        snapshot = {
+            "sector": sector.value,
+            "recent": self._memory[sector][-5:],
         }
 
-    def _ingest_by_language(self, language: str, data: Dict[str, Any]) -> str:
-        """Route memory to correct Trinity cluster by language tag."""
-        lang = language.upper()
-        if lang == "UK":
-            return self.green.ingest(data)
-        elif lang == "EN":
-            return self.gold.ingest(data)
-        else:  # Default: RU
-            return self.red.ingest(data)
+        routed = RoutedIntent(
+            original_text=text,
+            detected_language=lang,
+            sector=sector,
+            z15_target=z15_agent,
+            gravity_weight=self._gravity.get(z15_agent, 0.5),
+            memory_snapshot=snapshot,
+        )
 
-    # ─────────────────────────────────────────────────────────────────────────
-    # Provenance Generation (Auto, Session-Based)
-    # ─────────────────────────────────────────────────────────────────────────
-    def _generate_provenance(
-        self, intent: str, source_z: int, language: str, mem_id: str
-    ) -> Dict[str, Any]:
-        """
-        Auto-generate a minimal Provenance record from session context.
-        This is the Z16 solution to the "bureaucracy overhead" problem:
-        provenance is generated automatically by the router, not manually by LLM.
-        """
         return {
-            "knowledge": {
-                "id": f"know-{uuid.uuid4().hex[:6]}",
-                "statement": intent,
-                "primary_category": "External" if source_z == 17 else "Inferred",
-                "evidence": [f"session_memory:{mem_id}", f"z{source_z}_input"],
-                "confidence": "High",
-                "language": language,
-            },
-            "decision": {
-                "id": f"dec-{uuid.uuid4().hex[:6]}",
-                "decision": f"Route intent from Z{source_z} through Z16 Trinity",
-                "primary_category": "Mandated by Contract",
-                "rationale": "Z16 is the mandatory memory observer for all Z17↔Z15 traffic.",
-                "evidence": ["contracts/KNOWLEDGE_PROVENANCE.md", "contracts/DECISION_PROVENANCE.md"],
-                "confidence": "High",
-            },
+            "status": "routed",
+            "layer": "Z16 — Trinity Router",
+            "language": routed.detected_language,
+            "sector": routed.sector.value,
+            "z15_target": routed.z15_target,
+            "gravity_weight": routed.gravity_weight,
+            "memory_snapshot": routed.memory_snapshot,
+            "timestamp": routed.timestamp,
         }
 
-    # ─────────────────────────────────────────────────────────────────────────
-    # Snapshot Management
-    # ─────────────────────────────────────────────────────────────────────────
-    async def store_snapshot(self, payload: Dict[str, Any]) -> str:
-        """Store an external provenance snapshot."""
-        snapshot_id = payload.get("session_id") or f"snap-{uuid.uuid4().hex[:8]}"
-        payload["_stored_at"] = datetime.now(timezone.utc).isoformat()
-        self._snapshots[snapshot_id] = payload
-        print(f"[Z16] Snapshot stored: {snapshot_id}")
-        return snapshot_id
+    def adjust_gravity(self, agent_id: str, weight: float):
+        """Динамически обновить магнитный вес агента."""
+        if agent_id in self._gravity:
+            self._gravity[agent_id] = max(0.0, min(1.0, weight))
 
-    async def get_snapshot(self, session_id: str) -> Optional[Dict[str, Any]]:
-        """Retrieve a stored snapshot by session ID."""
-        return self._snapshots.get(session_id)
-
-    def _update_snapshot(
-        self, session_id: str, intent: str, provenance: Dict[str, Any], payload: Dict[str, Any]
-    ):
-        """Update the rolling session snapshot with new provenance data."""
-        if session_id not in self._snapshots:
-            self._snapshots[session_id] = {
-                "session_id": session_id,
-                "knowledge_provenance": [],
-                "decision_provenance": [],
-                "outcome_provenance": [],
-            }
-        snap = self._snapshots[session_id]
-        snap["knowledge_provenance"].append(provenance["knowledge"])
-        snap["decision_provenance"].append(provenance["decision"])
-        snap["_updated_at"] = datetime.now(timezone.utc).isoformat()
-
-    # ─────────────────────────────────────────────────────────────────────────
-    # Puck State (Visualization Bridge)
-    # ─────────────────────────────────────────────────────────────────────────
-    async def get_puck_states(self) -> List[Dict[str, Any]]:
-        """Return current puck positions for asdi-ep-os board visualization."""
-        return self._pucks
-
-    def update_puck(self, puck_id: str, x: int, y: int, z: int):
-        """Update a puck's spatial position (called by external commands)."""
-        for puck in self._pucks:
-            if puck["id"] == puck_id:
-                puck.update({"x": x, "y": y, "z": z})
-                print(f"[Z16] Puck '{puck_id}' moved to [{x},{y},{z}]")
-                return
-        print(f"[Z16] Warning: puck '{puck_id}' not found in registry.")
-
-    # ─────────────────────────────────────────────────────────────────────────
-    # Memory Inspection
-    # ─────────────────────────────────────────────────────────────────────────
-    def get_trinity_summary(self) -> Dict[str, Any]:
-        """Returns a summary of all three memory cluster sizes."""
-        return {
-            "🟩 Green [UK]": len(self.green.retrieve_all()),
-            "🟨 Gold  [EN]": len(self.gold.retrieve_all()),
-            "🟥 Red   [RU]": len(self.red.retrieve_all()),
-        }
+    def get_memory(self, sector: Optional[MemorySector] = None) -> dict:
+        """Получить текущее состояние памяти."""
+        if sector:
+            return {sector.value: self._memory[sector]}
+        return {k.value: v for k, v in self._memory.items()}
