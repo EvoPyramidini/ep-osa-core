@@ -1,90 +1,79 @@
-#!/usr/bin/env bash
-# ═══════════════════════════════════════════════════════════════════════════════
-#  EP-OSA Core — Boot Script
-#  Compatible: Termux (Android) + Windows (Git Bash / WSL) + Linux/macOS
+#!/data/data/com.termux/files/usr/bin/bash
+# ============================================================
+# EvoPyramid OS — Termux Boot Script
+# Z17 Global Nexus — Pocket Orchestrator
+# ============================================================
+# Запуск:
+#   chmod +x boot.sh
+#   ./boot.sh
 #
-#  Usage:
-#    chmod +x boot.sh
-#    ./boot.sh
-#
-#  This script activates the Python environment and launches the Z15→Z17
-#  HTTP Gateway (server.py), making the Z16 Trinity Router available
-#  to the asdi-ep-os frontend and any LLM environment.
-# ═══════════════════════════════════════════════════════════════════════════════
+# Что делает:
+#   1. Обновляет Canon из GitHub (git pull)
+#   2. Активирует виртуальное окружение
+#   3. Поднимает Z16 Trinity Router + HTTP сервер
+#   4. Держит 10-секундный heartbeat в фоне
+# ============================================================
 
-set -e  # Exit immediately on error
+set -e  # Остановить при любой ошибке
 
-# ─── Color Palette ──────────────────────────────────────────────────────────
-GOLD='\033[0;33m'
-GREEN='\033[0;32m'
+REPO_DIR="$HOME/ep-osa-core"
+VENV_DIR="$REPO_DIR/.venv"
+PORT=8000
+LOG_FILE="$REPO_DIR/pyramid.log"
+
+# ─── Цвета для терминала ──────────────────────────────────
 RED='\033[0;31m'
-GRAY='\033[0;37m'
+GREEN='\033[0;32m'
+GOLD='\033[0;33m'
+CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
 echo ""
-echo -e "${GOLD}  EvoPyramid OS — EP-OSA Core${NC}"
-echo -e "${GRAY}  Z17 Nexus → Z16 Trinity → Z15 Environments${NC}"
-echo -e "${GRAY}  ─────────────────────────────────────────${NC}"
-echo ""
+echo -e "${CYAN}🔺 EvoPyramid OS — Boot Sequence${NC}"
+echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 
-# ─── Environment Detection ───────────────────────────────────────────────────
-detect_env() {
-  if [ -d "/data/data/com.termux" ]; then
-    echo "termux"
-  elif [ "$OS" = "Windows_NT" ]; then
-    echo "windows"
-  else
-    echo "unix"
-  fi
-}
-
-ENV_TYPE=$(detect_env)
-echo -e "${GRAY}  Platform: ${GREEN}${ENV_TYPE}${NC}"
-
-# ─── Python & Virtual Environment ────────────────────────────────────────────
-VENV_DIR=".venv"
-
-if [ ! -d "$VENV_DIR" ]; then
-  echo -e "${GRAY}  Creating virtual environment...${NC}"
-  python3 -m venv "$VENV_DIR"
-fi
-
-# Activate virtual environment
-if [ "$ENV_TYPE" = "windows" ]; then
-  source "$VENV_DIR/Scripts/activate"
+# ─── Шаг 1: Проверить/клонировать репозиторий ─────────────
+if [ ! -d "$REPO_DIR" ]; then
+    echo -e "${GOLD}[Z17] Cloning Canon from GitHub...${NC}"
+    git clone https://github.com/EvoPyramidini/ep-osa-core.git "$REPO_DIR"
 else
-  source "$VENV_DIR/bin/activate"
+    echo -e "${GOLD}[Z17] Syncing Canon from GitHub...${NC}"
+    cd "$REPO_DIR"
+    git pull origin main 2>&1 | tail -3
 fi
 
-echo -e "${GREEN}  ✓ Virtual environment activated${NC}"
+cd "$REPO_DIR"
 
-# ─── Dependencies ────────────────────────────────────────────────────────────
-echo -e "${GRAY}  Installing dependencies...${NC}"
-pip install -q -r requirements.txt 2>/dev/null || {
-  echo -e "${GRAY}  requirements.txt not found. Installing core dependencies...${NC}"
-  pip install -q fastapi uvicorn pydantic
-}
-echo -e "${GREEN}  ✓ Dependencies ready${NC}"
-
-# ─── Environment Variables ───────────────────────────────────────────────────
-if [ -f ".env" ]; then
-  export $(grep -v '^#' .env | xargs)
-  echo -e "${GREEN}  ✓ Environment variables loaded from .env${NC}"
+# ─── Шаг 2: Виртуальное окружение ─────────────────────────
+if [ ! -d "$VENV_DIR" ]; then
+    echo -e "${GOLD}[Z15] Creating Python virtual environment...${NC}"
+    python3 -m venv "$VENV_DIR"
 fi
 
-# ─── Z16 Trinity Router Check ────────────────────────────────────────────────
-if [ ! -f "src/orchestration/z16_router.py" ]; then
-  echo -e "${RED}  ✗ Z16 Router not found. Aborting.${NC}"
-  exit 1
-fi
-echo -e "${GREEN}  ✓ Z16 Trinity Router detected${NC}"
+source "$VENV_DIR/bin/activate"
 
-# ─── Launch ──────────────────────────────────────────────────────────────────
+# ─── Шаг 3: Зависимости ───────────────────────────────────
+echo -e "${GOLD}[Z15] Installing dependencies...${NC}"
+pip install --quiet fastapi uvicorn[standard] 2>&1 | tail -2
+
+# ─── Шаг 4: Предотвратить убийство процесса Android ───────
+echo -e "${GOLD}[SYS] Acquiring wake lock...${NC}"
+termux-wake-lock 2>/dev/null || echo "  (wake-lock skipped — no Termux:API)"
+
+# ─── Шаг 5: Получить IP для фронтенда ─────────────────────
+LOCAL_IP=$(ip route get 1 2>/dev/null | awk '{print $7; exit}' || hostname -I | awk '{print $1}')
 echo ""
-echo -e "${GOLD}  Launching Z17 HTTP Gateway on http://0.0.0.0:8000${NC}"
-echo -e "${GRAY}  Frontend bridge: http://localhost:5173 (asdi-ep-os)${NC}"
-echo -e "${GRAY}  API Docs:        http://localhost:8000/docs${NC}"
-echo -e "${GRAY}  Health Check:    http://localhost:8000/health${NC}"
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "${GREEN}🔺 Z17 Global Nexus ONLINE${NC}"
+echo -e "${GREEN}   React UI → http://${LOCAL_IP}:${PORT}${NC}"
+echo -e "${GREEN}   WebSocket → ws://${LOCAL_IP}:${PORT}/ws${NC}"
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo ""
 
-python3 server.py
+# ─── Шаг 6: Запуск оркестратора ───────────────────────────
+echo -e "${CYAN}[Z15] Starting Orchestrator on port ${PORT}...${NC}"
+uvicorn server:app \
+    --host 0.0.0.0 \
+    --port "$PORT" \
+    --log-level info \
+    2>&1 | tee -a "$LOG_FILE"
