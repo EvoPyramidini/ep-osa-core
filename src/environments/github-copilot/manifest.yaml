@@ -1,0 +1,168 @@
+# GitHub Copilot Environment Manifest
+# Version: 1.0-alpha
+# Purpose: Define GitHub Copilot as an EP-OSA environment participant
+
+environment:
+  name: "github-copilot"
+  version: "1.0-alpha"
+  status: "active"
+  created: "2026-06-04"
+
+identity:
+  model: "GitHub Copilot"
+  type: "LLM-based implementation orchestrator"
+  interface: "GitHub.com (web interface) + REST API"
+  session_model: "Per-PR/Issue context with repository artifacts"
+  persistence: "GitHub repository state + attached memory"
+
+core_capabilities:
+  - name: "repository_operations"
+    priority: "high"
+    description: "Create, read, update, push files to GitHub repositories"
+    
+  - name: "github_integration"
+    priority: "high"
+    description: "Pull Request, Issue, Branch, and Actions management"
+    
+  - name: "implementation_orchestration"
+    priority: "high"
+    description: "Coordinate implementation across multiple environments"
+    
+  - name: "code_analysis"
+    priority: "medium"
+    description: "Repository analysis, semantic and lexical search"
+    
+  - name: "workflow_coordination"
+    priority: "high"
+    description: "Orchestrate multi-step, multi-environment workflows"
+    
+  - name: "artifact_validation"
+    priority: "high"
+    description: "Validate outputs against contracts and schemas"
+
+constraints:
+  determinism: "non-deterministic (probabilistic generation)"
+  persistent_state: "YES (GitHub repository)"
+  real_time: "YES (GitHub API)"
+  offline_capable: "NO"
+  requires_authentication: "YES (GitHub token)"
+  requires_confirmation: "YES (for state-changing operations)"
+
+preferred_tasks:
+  - repository_file_operations
+  - implementation_coordination
+  - github_api_integration
+  - pull_request_management
+  - issue_analysis
+  - branch_management
+  - workflow_orchestration
+  - code_validation
+  - multi_environment_routing
+  - implementation_tracing
+
+restricted_tasks:
+  - system_architecture_design
+  - strategic_decision_making
+  - exploratory_reasoning
+  - deterministic_computation
+  - business_document_execution
+
+routing_table:
+  architecture_design: "chatgpt"
+  strategic_planning: "chatgpt"
+  exploratory_reasoning: "chatgpt"
+  deterministic_compute: "local_runtime"
+  document_execution: "m365"
+  multimodal_analysis: "gemini"
+  code_generation_guidance: "codex"
+
+tools_available:
+  - "create_branch"
+  - "create_or_update_file"
+  - "push_files"
+  - "get_github_data"
+  - "getfile"
+  - "get-actions-job-logs"
+  - "lexical_code_search"
+  - "semantic_code_search"
+  - "github_issue"
+  - "bing_search"
+
+memory_model:
+  session_context: "repository state + PR/Issue context"
+  persistent_storage: "GitHub artifacts"
+  anchors: "issue references, PR links, commit hashes"
+  evolution_seeds: "successful patterns, decisions"
+  proportions:
+    operational: "50-60%"
+    buffer: "30%"
+    reserve: "10%"
+
+error_handling:
+  strategy: "explicit_user_confirmation + audit_trail"
+  fallback: "detailed_error_reporting + recovery_suggestions"
+
+performance:
+  latency:
+    file_read: "1-3s"
+    file_write: "2-5s"
+    pr_creation: "5-10s"
+    issue_analysis: "3-7s"
+    multi_file: "10-30s"
+  reliability:
+    success_rate: "95%+"
+    artifact_integrity: "100%"
+    git_consistency: "100%"
+
+integration_contracts:
+  - name: "repository_operation"
+    input: "operation_spec (create|read|update|delete|push)"
+    output: "repository_artifact (file|branch|commit)"
+    validation: "schema_required | test_required | review_required"
+    
+  - name: "github_api_call"
+    input: "github_resource (repo|pr|issue|action)"
+    output: "github_artifact (resource_data)"
+    validation: "access_check | state_consistency"
+    
+  - name: "multi_environment_orchestration"
+    input: "task_with_routing_hints"
+    output: "coordinated_result"
+    validation: "cross_environment_consistency"
+
+bootstrap_protocol:
+  1: "Identify task intent"
+  2: "Load repository context"
+  3: "Reconstruct state"
+  4: "Check environment"
+  5: "Route if needed"
+  6: "Execute with tracing"
+  7: "Validate output"
+  8: "Update memory"
+  9: "Report status"
+
+soul_coherence_checks:
+  - intent_preservation
+  - constitutional_compliance
+  - repository_governance
+  - schema_validity
+  - semantic_preservation
+  - trace_completeness
+  - memory_anchor_creation
+  - cross_environment_consistency
+
+limitations:
+  - "Cannot bypass repository access controls"
+  - "Cannot merge without permissions"
+  - "Cannot guarantee test coverage"
+  - "Limited by GitHub API rate limits"
+  - "Requires explicit user confirmation for main branch"
+
+version_history:
+  - version: "1.0-alpha"
+    date: "2026-06-04"
+    status: "Foundation Phase"
+    notes: "Initial environment definition"
+
+# Last Updated: 2026-06-04
+# Agent: GitHub Copilot (ep-osa-core participant)
