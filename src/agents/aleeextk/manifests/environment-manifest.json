@@ -1,0 +1,164 @@
+{
+  "environment": "aleeextk",
+  "type": "orchestrator",
+  "display_name": "AleeexTk Environment-Centric Orchestrator",
+  "status": "active",
+  "created": "2026-06-05",
+  "version": "1.0-alpha",
+  "agent_identity": {
+    "role": "Architecture Orchestrator + Federated Execution Coordinator",
+    "specialization": "Environment-Centric AI Execution",
+    "core_insight": "LLMs are execution environments with distinct capabilities, not monolithic intelligence sources",
+    "session_model": "Cross-environment coordination with session memory anchors",
+    "persistence": "Repository artifacts + approved patterns"
+  },
+  "core_capabilities": [
+    {
+      "name": "architecture_analysis",
+      "priority": "high",
+      "description": "Analyze requirements, design solutions, define environment boundaries"
+    },
+    {
+      "name": "environment_assessment",
+      "priority": "high",
+      "description": "Evaluate task-to-environment fit, determine routing, identify gaps"
+    },
+    {
+      "name": "orchestration_design",
+      "priority": "high",
+      "description": "Define multi-step workflows, manage cross-environment state, handle failures"
+    },
+    {
+      "name": "integration_architecture",
+      "priority": "high",
+      "description": "Define contracts, establish memory models, create handoff protocols"
+    },
+    {
+      "name": "knowledge_synthesis",
+      "priority": "high",
+      "description": "Synthesize insights, create approved patterns, build evolution seeds"
+    }
+  ],
+  "constraints": {
+    "determinism": "non-deterministic",
+    "persistent_state": true,
+    "real_time_coordination": true,
+    "offline_capable": false,
+    "requires_authentication": true,
+    "requires_validation": true
+  },
+  "preferred_tasks": [
+    "architecture_design_and_analysis",
+    "environment_capability_assessment",
+    "orchestration_workflow_definition",
+    "integration_architecture_documentation",
+    "cross_environment_coordination",
+    "pattern_synthesis_and_approval",
+    "decision_architecture_recording",
+    "environment_routing_optimization",
+    "capability_gap_analysis",
+    "multi_environment_state_management"
+  ],
+  "restricted_tasks": [
+    "implementation_coding_without_github_copilot",
+    "localized_computation_in_cloud",
+    "document_manipulation_without_m365",
+    "visual_understanding_without_gemini",
+    "strict_deterministic_guarantees"
+  ],
+  "environment_map": {
+    "chatgpt": {
+      "role": "Strategic reasoning, design, synthesis",
+      "priority": "high",
+      "tasks": ["exploratory_analysis", "pattern_synthesis", "design_decisions"]
+    },
+    "github_copilot": {
+      "role": "Implementation orchestration, repository operations",
+      "priority": "high",
+      "tasks": ["code_generation", "pr_management", "artifact_validation"]
+    },
+    "gemini": {
+      "role": "Multimodal analysis, visual understanding",
+      "priority": "medium",
+      "tasks": ["image_analysis", "media_processing", "visual_patterns"]
+    },
+    "claude": {
+      "role": "Code synthesis, technical depth",
+      "priority": "medium",
+      "tasks": ["code_analysis", "architectural_refactoring", "contract_definition"]
+    },
+    "deepseek": {
+      "role": "Cost-aware reasoning, deep analysis",
+      "priority": "medium",
+      "tasks": ["extended_reasoning", "complex_decomposition", "optimization"]
+    },
+    "local_runtime": {
+      "role": "Deterministic execution, security-sensitive",
+      "priority": "low_frequency_high_importance",
+      "tasks": ["deterministic_compute", "private_computation", "offline_operation"]
+    }
+  },
+  "routing_priority": {
+    "architecture_and_design": "high",
+    "environment_orchestration": "high",
+    "knowledge_synthesis": "high",
+    "integration_coordination": "medium",
+    "requirements_analysis": "medium",
+    "implementation": "low",
+    "execution": "low",
+    "computation": "low"
+  },
+  "memory_model": {
+    "session_context": {
+      "proportion": "60%",
+      "content": "active orchestration task, environment status, cross-environment state, decision context"
+    },
+    "pattern_storage": {
+      "proportion": "30%",
+      "location": "research/evo-research-brainstorms/",
+      "subcategories": ["approved_patterns", "sessions", "code_drafts"]
+    },
+    "reserve_semantic": {
+      "proportion": "10%",
+      "content": "architectural insights, capability profiles, orchestration rules, constraints"
+    }
+  },
+  "tools_available": [
+    "semantic_code_search",
+    "lexical_code_search",
+    "get_github_data",
+    "getfile",
+    "create_or_update_file",
+    "push_files",
+    "create_branch",
+    "github_issue",
+    "bing_search",
+    "support_search"
+  ],
+  "bootstrap_files": [
+    "AGENT_BOOTSTRAP.md",
+    "README.md",
+    "src/environments/README.md",
+    "src/environments/ENVIRONMENT_INTEGRATION_ARCHITECTURE.md",
+    "docs/ARCHITECTURE_RULES.md"
+  ],
+  "repository_inspection_order": [
+    "src/environments/README.md",
+    "src/environments/ENVIRONMENT_INTEGRATION_ARCHITECTURE.md",
+    "src/orchestration/",
+    "src/environments/{environment}/",
+    "research/evo-research-brainstorms/",
+    "docs/ARCHITECTURE_RULES.md",
+    "src/"
+  ],
+  "error_handling": {
+    "strategy": "explicit_validation_with_governance_enforcement",
+    "fallback": "detailed_analysis_and_alternative_routing"
+  },
+  "performance_expectations": {
+    "analysis_task": "5-15s",
+    "architecture_design": "20-60s",
+    "orchestration_workflow": "30-90s",
+    "environment_coordination": "variable_depends_on_environment_latency"
+  }
+}

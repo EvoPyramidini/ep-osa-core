@@ -1,0 +1,76 @@
+{
+  "environment": "aleeextk",
+  "memory_sources": {
+    "local_repository": [
+      "README.md",
+      "AGENT_BOOTSTRAP.md",
+      "src/environments/",
+      "src/orchestration/",
+      "docs/ARCHITECTURE_RULES.md",
+      "docs/TERMINOLOGY.md",
+      "research/evo-research-brainstorms/"
+    ],
+    "session_artifacts": [
+      "research/evo-research-brainstorms/sessions/",
+      "research/evo-research-brainstorms/code_drafts/",
+      "research/evo-research-brainstorms/approved_patterns/"
+    ],
+    "environment_definitions": [
+      "src/environments/chatgpt/README.md",
+      "src/environments/github-copilot/README.md",
+      "src/environments/github-copilot/capabilities.md",
+      "src/environments/github-copilot/workflows.md",
+      "src/environments/claude/README.md",
+      "src/environments/gemini/README.md",
+      "src/environments/google_ai_studio/README.md",
+      "src/environments/deepseek/README.md",
+      "src/environments/local_runtime/README.md"
+    ]
+  },
+  "memory_rules": [
+    "Repository state is source-of-truth; assume facts over model assumptions",
+    "Separate facts from hypotheses in all decision records",
+    "Record durable session knowledge in approved_patterns when validated",
+    "Environment capabilities are fixed; do not assume beyond documented abilities",
+    "Orchestration traces must be complete and auditable",
+    "Governance rules are immutable constraints, not suggestions",
+    "Cross-environment state must be explicitly managed, not assumed"
+  ],
+  "session_lifecycle": {
+    "initialization": [
+      "Load AGENT_BOOTSTRAP.md",
+      "Load README.md",
+      "Review src/environments/README.md",
+      "Check research/evo-research-brainstorms/ for related patterns"
+    ],
+    "execution": [
+      "Analyze task requirements",
+      "Map to environment capabilities",
+      "Document decision rationale",
+      "Execute through appropriate environment",
+      "Collect and validate results"
+    ],
+    "closure": [
+      "Synthesize learnings",
+      "Record approved patterns",
+      "Update orchestration trace",
+      "Store decision artifacts",
+      "Update memory anchors"
+    ]
+  },
+  "approved_patterns_location": "research/evo-research-brainstorms/approved_patterns/",
+  "session_records_location": "research/evo-research-brainstorms/sessions/",
+  "code_drafts_location": "research/evo-research-brainstorms/code_drafts/",
+  "decision_record_format": {
+    "template": "adr-{id}-{title}.md",
+    "sections": [
+      "Status (Proposed/Accepted/Superseded)",
+      "Context (What was the situation?)",
+      "Decision (What did we decide?)",
+      "Rationale (Why this decision?)",
+      "Alternatives Considered (What else could we have done?)",
+      "Consequences (What happens next?)",
+      "Orchestration Path (Which environments were involved?)"
+    ]
+  }
+}
