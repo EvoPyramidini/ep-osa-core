@@ -221,14 +221,14 @@ Losers → L4 Archive (не удаляются, addressable для retrieval)
 
 ## Components Required
 
-| Компонент                | Функция                                             | Статус       |
-|:-------------------------|:----------------------------------------------------|:-------------|
-| `SemanticLocator`        | Переводит task intent в memory address              | `[ planned ]` |
-| `ContextLoader`          | Собирает минимальный необходимый state из пирамиды  | `[ planned ]` |
-| `TraceDistiller`         | Преобразует execution trace в architectural facts   | `[ planned ]` |
-| `MemoryGarbageCollector` | Удаляет шум, архивирует, схлопывает дубликаты       | `[ planned ]` |
+| Компонент                | Функция                                              | Статус        |
+|:-------------------------|:-----------------------------------------------------|:--------------|
+| `SemanticLocator`        | Переводит task intent в memory address               | `[ planned ]` |
+| `ContextLoader`          | Собирает минимальный необходимый state из пирамиды   | `[ planned ]` |
+| `TraceDistiller`         | Преобразует execution trace в architectural facts    | `[ planned ]` |
+| `MemoryGarbageCollector` | Удаляет шум, архивирует, схлопывает дубликаты        | `[ planned ]` |
 | `InsightIntakeQueue`     | Принимает deferred insights без прерывания execution | `[ planned ]` |
-| `HypothesisArchive`      | Хранит проигравшие mutation variants для retrieval  | `[ planned ]` |
+| `HypothesisArchive`      | Хранит проигравшие mutation variants для retrieval   | `[ planned ]` |
 
 ---
 

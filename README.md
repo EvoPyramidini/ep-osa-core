@@ -24,7 +24,7 @@ A topology-driven orchestration nucleus for intelligent, multi-environment cogni
 
 ## 🔺 The 9-Layer Pyramid Architecture
 
-```
+```text
         ╔═══════════════════════════════════╗
         ║     9. Research (Experimental)   ║ EvoAbsolut, HybridSession, PEAR
         ╠═══════════════════════════════════╣
@@ -50,7 +50,7 @@ A topology-driven orchestration nucleus for intelligent, multi-environment cogni
 
 ## 🏗️ Project Structure
 
-```
+```text
 ep-osa-core/
 │
 ├── docs/                          # Architecture, governance, terminology
@@ -140,31 +140,37 @@ chmod +x boot.sh
 ## 📖 Core Concepts
 
 ### 1. Constitution (Layer 1)
+
 Immutable governance principles guide all operations. Every system decision respects constitutional rules.
 
 **Read:** `docs/ARCHITECTURE_RULES.md`
 
 ### 2. Contracts (Layer 2)
+
 Every interaction is explicit with defined input/output and guarantees.
 
 **Directory:** `contracts/`
 
 ### 3. Schemas (Layer 3)
+
 All data validated against explicit schemas for type safety.
 
 **Directory:** `src/schemas/`
 
 ### 4. Runtime (Layer 4)
+
 Secure, resource-bounded execution with failure isolation.
 
 **Directory:** `src/runtime/`
 
 ### 5. Skills (Layer 5)
+
 Composable agent capabilities respecting contracts.
 
 **Directory:** `skills/`
 
 ### 6. Orchestration (Layer 6)
+
 Workflow coordination combining multiple skills. The **Z16 Trinity Router** provides intelligent routing across environments (Green/Gold/Red channels).
 
 **Directory:** `src/orchestration/`
@@ -172,19 +178,23 @@ Workflow coordination combining multiple skills. The **Z16 Trinity Router** prov
 **Key Component:** `src/orchestration/z16_router.py`
 
 ### 7. Tracing (Layer 7)
+
 Complete observability into system operation.
 
 **Directory:** `src/tracing/`
 
 ### 8. Memory (Layer 8)
+
 Intelligent storage with semantic anchoring and quantum-inspired navigation.
 
 **Proportions:**
+
 - **50-60%** Primary operational memory
 - **30%** Buffer layer for transitions  
 - **10%** Reserve for critical operations
 
 **Components:**
+
 - `EvoMemorySystem` — Core memory management
 - `QuantumBackpack` — Portable memory context
 - Memory anchors — Navigation landmarks
@@ -194,9 +204,11 @@ Intelligent storage with semantic anchoring and quantum-inspired navigation.
 **Directory:** `src/memory/`
 
 ### 9. Research (Layer 9)
+
 Experimental exploration of quantum jumping, self-evolution, and emerging patterns.
 
 **Components:**
+
 - **EvoAbsolut** — Quantum-inspired self-evolving core
 - **HybridSession** — Hybrid buffer architecture
 - **PEAR Framework** — Interaction model
@@ -230,7 +242,7 @@ GET /pyramid/nodes
 
 ### WebSocket
 
-```
+```text
 ws://localhost:8000/ws
 → Heartbeat + state updates every 10 seconds
 ```
@@ -300,6 +312,7 @@ Environments are defined by **manifests** in `src/environments/*/manifest.json` 
 ### Experimental Features
 
 Use `research/` for exploration:
+
 - New memory models
 - Advanced orchestration
 - Novel quantum patterns
@@ -326,7 +339,8 @@ pytest -v
 ```
 
 **Test Results (2026-06-05):**
-```
+
+```text
 ✓ 61 tests passed, 0 failed (2.67s)
 ⚠ 10 warnings (Pydantic enum serializer — non-blocking)
 ```
@@ -404,17 +418,20 @@ MAX_CONCURRENT_TASKS=10
 ## 📊 Recent Updates (2026-06-05)
 
 ### New Documentation
+
 - `PYRAMID_ENVIRONMENT_RULES.md` — Physical laws & regional anchors
 - `MAGNETIC_ORCHESTRATION_MANIFEST.md` — Weightless control protocol
 - `COGNITIVE_MEMORY_PYRAMID.md` — Hierarchical memory L0-L4
 
 ### Server Architecture
+
 - **Z17 Global Nexus** — REST API + WebSocket server
 - **Z16 Trinity Router** — Intelligent routing (Green/Gold/Red)
 - **Z15 Environments** — Execution substrate
 - **Termux Boot** — Android pocket orchestrator
 
 ### Features
+
 - Heartbeat-driven state synchronization (10s interval)
 - CORS-enabled local network communication
 - JSON state persistence
@@ -425,7 +442,7 @@ MAX_CONCURRENT_TASKS=10
 ## 🔗 Resources
 
 | Resource | Location | Purpose |
-|----------|----------|---------|
+| -------- | -------- | ------- |
 | **Architecture Rules** | `docs/ARCHITECTURE_RULES.md` | Constitutional governance |
 | **Terminology** | `docs/TERMINOLOGY.md` | Complete glossary |
 | **Concepts** | `docs/ARCHITECTURE.md` | Design patterns |
@@ -446,6 +463,7 @@ MAX_CONCURRENT_TASKS=10
 7. Submit pull request
 
 **Code Style:**
+
 - Python 3.9+
 - Type hints required
 - Docstrings for all public APIs
@@ -470,7 +488,7 @@ MIT License — See [LICENSE](LICENSE) file
 ## 📈 Project Status
 
 | Metric | Status |
-|--------|--------|
+| ------ | ------ |
 | **Version** | 1.0-alpha |
 | **Phase** | Foundation Layer (Core Stability) |
 | **Last Updated** | 2026-06-05 |
